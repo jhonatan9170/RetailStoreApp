@@ -23,7 +23,7 @@ struct ProductDetailView: View {
                 if product.discount != 0 {
                     HStack() {
                         Text("-\(product.discount)% ").foregroundColor(.red).background(.yellow)
-                        Text(product.price.toMonedaFormat()).strikethrough()
+                        Text(Double(product.regularPrice).toMonedaFormat()).strikethrough()
                     }
                 }
                 Text(product.price.toMonedaFormat())
