@@ -59,7 +59,8 @@ enum CodigoCategoria: String, Codable {
 
 extension Producto {
     func toProduct() -> Product {
-        let product = Product(name: self.nombre, description: "", price: self.precioFinal,
+        let product = Product(name: self.nombre, description: "", categoria: self.codigoCategoria.rawValue, price: self.precioFinal,
+                              regularPrice: self.precioRegular, discount: Int(self.porcentajeDescuento),
                               imageUrls: self.urlImagenes.map{URL(string: $0)!})
         return product
     }

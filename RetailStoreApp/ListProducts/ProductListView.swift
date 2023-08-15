@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductListView: View {
     
-    @ObservedObject var viewModel = ProductListViewModel()
+    @StateObject var viewModel = ProductListViewModel()
     @Environment(\.dismiss) var dismiss
     @Binding var selectedProduct: Product?
     
@@ -24,7 +24,7 @@ struct ProductListView: View {
                             selectedProduct = product
                             dismiss()
                         } label: {
-                            ProductGridItemView(product: product)
+                            ProductGridItemView(product: product).padding().border(.black, width: 0.5)
                             
                         }
                     }
@@ -32,7 +32,6 @@ struct ProductListView: View {
                 .padding()
             }
         }
-        .navigationBarTitle("Products")
         .onAppear {
             viewModel.loadProducts()
         }

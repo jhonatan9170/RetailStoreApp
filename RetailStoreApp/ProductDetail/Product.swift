@@ -11,6 +11,15 @@ struct Product: Identifiable {
     let id = UUID()
     let name: String
     let description: String
+    let categoria:String
     let price: Double
-    let imageUrls: [URL]
+    let regularPrice: Int
+    let discount: Int
+    let imageUrls: [URL]    
+}
+
+extension Double {
+    func toMonedaFormat() -> String {
+        return String(format: "$%.2f", self)
+    }
 }

@@ -12,40 +12,46 @@ struct ProductDetailView: View {
     @State private var isShowingProductList = false
 
     var body: some View {
-            VStack {
-                if let product = product {
-                    ImageSlider(imageUrls: product.imageUrls)
-                    Text(product.name)
-                        .font(.title)
-                        .padding(.bottom, 10)
-                    
-                    Text(product.description)
-                        .font(.body)
-                        .padding(.horizontal)
-                    
-                    Spacer()
-                    
-                    Text(String(format: "$%.2f", product.price))
-                        .font(.title)
-                        .foregroundColor(.green)
-                    .padding()}
-                Button(action: {
-                    isShowingProductList = true
-                }, label: {
-                    Text("Cargar Productos")
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.blue)
-                        .cornerRadius(8)
-                }).sheet(isPresented: $isShowingProductList, content: {
-                    ProductListView(selectedProduct: $product)
-                }).padding(.bottom)}
-        }
+        VStack {
+            if let product = product {
+                ImageSlider(imageUrls: product.imageUrls).frame(height: 300.0)
+                Text(product.name)
+                    .font(.title)
+                    .padding()
+                
+                Spacer()
+                if product.discount != 0 {
+                    HStack() {
+                        Text("-\(product.discount)% ").foregroundColor(.red).background(.yellow)
+                        Text(product.price.toMonedaFormat()).strikethrough()
+                    }
+                }
+                Text(product.price.toMonedaFormat())
+                    .font(.title)
+                    .foregroundColor(.green)
+                    .padding(.bottom)
+                
+            }
+            
+            Button(action: {
+                isShowingProductList = true
+            }, label: {
+                Text("Cargar Productos")
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .cornerRadius(8)
+            }).sheet(isPresented: $isShowingProductList, content: {
+                ProductListView(selectedProduct: $product)
+            }).padding(.bottom)}
     }
+}
 
 
 struct ProductDetail_Previews: PreviewProvider {
+    static let product = Product(name: "Motocicleta", description: "", categoria: "d", price: 30.0, regularPrice: 30, discount: 20, imageUrls: [])
+    
     static var previews: some View {
-        ProductDetailView()
+        ProductDetailView(product: product)
     }
 }
